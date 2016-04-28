@@ -53,17 +53,25 @@
 			qrcode.addData(options.text);
 			qrcode.make();
 			
-			// create table element
+			var ww = options.width;
+			var tileW	= Math.round(options.width / qrcode.getModuleCount());
+			var tileH	= Math.round(options.height / qrcode.getModuleCount());
+			if(tileH == 0)
+				tileH = 1;
+			if(tileW == 0)
+				tileW = 1;
+			options.width = tileW * qrcode.getModuleCount();
+			options.height = tileH * qrcode.getModuleCount();   
+
+                        var left = Math.round((ww - options.width)/2);  
+                        // create table element
 			var $table	= $('<table></table>')
 				.css("width", options.width+"px")
 				.css("height", options.height+"px")
 				.css("border", "0px")
+				.css("margin-left", left + "px")
 				.css("border-collapse", "collapse")
 				.css('background-color', options.background);
-		  
-			// compute tileS percentage
-			var tileW	= options.width / qrcode.getModuleCount();
-			var tileH	= options.height / qrcode.getModuleCount();
 
 			// draw in the table
 			for(var row = 0; row < qrcode.getModuleCount(); row++ ){
